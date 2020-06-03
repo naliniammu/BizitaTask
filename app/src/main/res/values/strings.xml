@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BizitaTask</string>
+    <string name="profile_list">Profile List</string>
 </resources>

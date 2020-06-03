@@ -1,7 +1,6 @@
 package com.example.bizitatask;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,9 +8,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.bizitatask.adapter.ProfileListAdapter;
-import com.example.bizitatask.databinding.ActivityMainBinding;
 import com.example.bizitatask.entities.Profile;
 
 import java.util.List;
@@ -21,18 +20,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements ProfileListAdapter.OnItemclickListner {
-   private ActivityMainBinding activityMainBinding;
+
     private ProfileListAdapter profileListAdapter;
     private ProfileListAdapter.OnItemclickListner onItemclickListner;
     private List<Profile> articleList;
 
+    private RecyclerView profileListRecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setContentView(R.layout.activity_main);
+        profileListRecyclerView = findViewById(R.id.profile_list_recycler_view);
         onItemclickListner = this;
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
-        activityMainBinding.profileListRecyclerView.setLayoutManager(mLayoutManager);
+        profileListRecyclerView.setLayoutManager(mLayoutManager);
         loadProfiledata();
     }
 
@@ -65,17 +66,18 @@ public class MainActivity extends AppCompatActivity implements ProfileListAdapte
         final ProgressDialog progressDialog = new ProgressDialog(getApplicationContext());
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Please Wait");
-        progressDialog.show();
         final APIInterface apiService = ApiClient.getClient().create(APIInterface.class);
         Call<ResponseModel> call = apiService.getLatestNews("");
         call.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                assert response.body() != null;
                 if (response.body().getSuccess()!=null) {
                     articleList = response.body().getSuccess();
+                    Log.e("testing","articleList = "+articleList);
                     if (articleList.size() > 0) {
                         profileListAdapter = new ProfileListAdapter(MainActivity.this, articleList, onItemclickListner);
-                        activityMainBinding.profileListRecyclerView.setAdapter(profileListAdapter);
+                        profileListRecyclerView.setAdapter(profileListAdapter);
 
                     }
                     progressDialog.dismiss();

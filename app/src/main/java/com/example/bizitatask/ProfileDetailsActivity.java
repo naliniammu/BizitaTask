@@ -1,20 +1,23 @@
 package com.example.bizitatask;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.bizitatask.databinding.ActivityProfileDetailsBinding;
+
 
 public class ProfileDetailsActivity extends AppCompatActivity {
-    private ActivityProfileDetailsBinding profileDetailsBinding;
 
+    ImageView profile_image;
+    TextView profile_user_name, contact_number, employee_code;
+    TextView textcategory, textaddress, descriprition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        profileDetailsBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile_details);
+        setContentView(R.layout.activity_profile_details);
         final String name = getIntent().getStringExtra("name");
         final String category = getIntent().getStringExtra("category");
         final String address = getIntent().getStringExtra("address");
@@ -23,19 +26,27 @@ public class ProfileDetailsActivity extends AppCompatActivity {
         final String empcode = getIntent().getStringExtra("empcode");
         final String image = getIntent().getStringExtra("image");
 
-        profileDetailsBinding.profileUserName.setText(name);
-        profileDetailsBinding.category.setText(category);
-        profileDetailsBinding.address.setText(address);
-        profileDetailsBinding.descriprition.setText(description);
-        profileDetailsBinding.contactNumber.setText(contact);
-        profileDetailsBinding.employeeCode.setText(empcode);
+        profile_image = findViewById(R.id.profile_image);
+        profile_user_name = findViewById(R.id.profile_user_name);
+        contact_number = findViewById(R.id.contact_number);
+        employee_code = findViewById(R.id.employee_code);
+        textcategory = findViewById(R.id.category);
+        textaddress = findViewById(R.id.address);
+        descriprition = findViewById(R.id.descriprition);
+
+        profile_user_name.setText(name);
+        textcategory.setText(category);
+        textaddress.setText(address);
+        descriprition.setText(description);
+        contact_number.setText(contact);
+        employee_code.setText(empcode);
         if (image!= null) {
             Glide.with(this)
                     .load(image)
                     .placeholder(R.drawable.ic_launcher_background)
-                    .into(profileDetailsBinding.profileImage);
+                    .into(profile_image);
         } else {
-            profileDetailsBinding.profileImage.setImageDrawable(null);
+            profile_image.setImageDrawable(null);
         }
     }
 

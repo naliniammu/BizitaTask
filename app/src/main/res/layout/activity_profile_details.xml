@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ProfileDetailsActivity">
+    android:orientation="vertical">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,7 +18,8 @@
                 android:textSize="@dimen/font_15sp"
                 android:padding="@dimen/dimen_5dp"
                 android:layout_gravity="center"
-                android:layout_height="100dp"/>
+                android:layout_height="100dp"
+                android:contentDescription="TODO" />
             <TextView
                 android:id="@+id/profile_user_name"
                 android:layout_width="wrap_content"
@@ -70,4 +69,3 @@
     </ScrollView>
 
 </LinearLayout>
-</layout>
